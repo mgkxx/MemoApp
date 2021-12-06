@@ -1,19 +1,26 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { string } from 'prop-types';
+import { string, shape } from 'prop-types';
 
 export default function CircleB(props) {
   // 分割代入
-  const { children } = props;
+  const { ic, style } = props;
   return (
-    <View style={styles.circleButton}>
-      <Text style={styles.circleButtonLabel}>{children}</Text>
+    <View style={[styles.circleButton, style]}>
+      <Text style={styles.circleButtonLabel}>{ic}</Text>
     </View>
   );
 }
 
 CircleB.propTypes = {
-  children: string.isRequired,
+  ic: string.isRequired,
+  // shapeはオブジェクトの形を定義する。
+  // 何も指定指定していない場合はどんな形のオブジェクトでも受け入れる。
+  style: shape(),
+};
+
+CircleB.defaultProps = {
+  style: null,
 };
 
 const styles = StyleSheet.create({

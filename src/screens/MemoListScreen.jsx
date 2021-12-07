@@ -16,7 +16,7 @@ export default function MemoListSc() {
 
       {/* CircleButtonファイルのdefault functionが返却される */}
       {/* <Cl>+</Cl>の中の"+"は、propsのchildrenで取得できる */}
-      <Cl>+</Cl>
+      <Cl name="shape-circle-plus" />
     </View>
   );
 }

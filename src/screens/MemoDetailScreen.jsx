@@ -28,7 +28,10 @@ export default function MemoListDetailSc() {
       {/* 編集ボタン */}
       {/* <CircleButton>👈</CircleButton> */}
       {/* styleを上書き */}
-      <CircleButton style={{ top: 160, bottom: 'auto' }} ic="+" />
+      <CircleButton
+        style={{ top: 160, bottom: 'auto' }}
+        name="fountain-pen-tip"
+      />
     </View>
   );
 }

@@ -1,22 +1,25 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { string, shape } from 'prop-types';
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function CircleB(props) {
   // 分割代入
-  const { ic, style } = props;
+  const { style, name } = props;
   return (
     <View style={[styles.circleButton, style]}>
-      <Text style={styles.circleButtonLabel}>{ic}</Text>
+      {/* <Text style={styles.circleButtonLabel}>{ic}</Text> */}
+      <MaterialCommunityIcons name={name} size={32} color="white" />
     </View>
   );
 }
 
 CircleB.propTypes = {
-  ic: string.isRequired,
   // shapeはオブジェクトの形を定義する。
   // 何も指定指定していない場合はどんな形のオブジェクトでも受け入れる。
   style: shape(),
+  name: string.isRequired,
 };
 
 CircleB.defaultProps = {

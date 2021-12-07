@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function MemoLst() {
   return (
@@ -10,7 +11,11 @@ export default function MemoLst() {
           <Text style={styles.memoListItemDate}>2020年10月30日</Text>
         </View>
         <View>
-          <Text>X</Text>
+          <MaterialCommunityIcons
+            name="close-box-multiple-outline"
+            size={16}
+            color="#B0B0B0"
+          />
         </View>
       </View>
       <View style={styles.memoListItem}>
@@ -19,7 +24,11 @@ export default function MemoLst() {
           <Text style={styles.memoListItemDate}>2020年10月30日</Text>
         </View>
         <View>
-          <Text>X</Text>
+          <MaterialCommunityIcons
+            name="close-box-multiple-outline"
+            size={16}
+            color="#B0B0B0"
+          />
         </View>
       </View>
       <View style={styles.memoListItem}>
@@ -28,7 +37,11 @@ export default function MemoLst() {
           <Text style={styles.memoListItemDate}>2020年10月30日</Text>
         </View>
         <View>
-          <Text>X</Text>
+          <MaterialCommunityIcons
+            name="close-box-multiple-outline"
+            size={16}
+            color="#B0B0B0"
+          />
         </View>
       </View>
     </View>

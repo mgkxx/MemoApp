@@ -1,18 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, string } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { func, string } from 'prop-types';
 
 export default function Button(props) {
-  const { label } = props;
+  const { label, onPress } = props;
   return (
-    <View style={styles.buttonContainer}>
+    <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
       <Text style={styles.buttonLabel}>{label}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
 // propTyepesのspell間違いに注意
 Button.propTypes = {
   label: string.isRequired,
+  onPress: func,
+};
+
+Button.defaultProps = {
+  onPress: null,
 };
 
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function MemoLst() {
@@ -10,39 +10,39 @@ export default function MemoLst() {
           <Text style={styles.memoListItemTitle}>買い物リスト</Text>
           <Text style={styles.memoListItemDate}>2020年10月30日</Text>
         </View>
-        <View>
+        <TouchableOpacity>
           <MaterialCommunityIcons
             name="close-box-multiple-outline"
             size={16}
             color="#B0B0B0"
           />
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.memoListItem}>
         <View>
           <Text style={styles.memoListItemTitle}>買い物リスト</Text>
           <Text style={styles.memoListItemDate}>2020年10月30日</Text>
         </View>
-        <View>
+        <TouchableOpacity>
           <MaterialCommunityIcons
             name="close-box-multiple-outline"
             size={16}
             color="#B0B0B0"
           />
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.memoListItem}>
         <View>
           <Text style={styles.memoListItemTitle}>買い物リスト</Text>
           <Text style={styles.memoListItemDate}>2020年10月30日</Text>
         </View>
-        <View>
+        <TouchableOpacity>
           <MaterialCommunityIcons
             name="close-box-multiple-outline"
             size={16}
             color="#B0B0B0"
           />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

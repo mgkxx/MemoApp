@@ -1,17 +1,18 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { string, shape } from 'prop-types';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { string, shape, func } from 'prop-types';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function CircleB(props) {
   // 分割代入
-  const { style, name } = props;
+  const { style, name, onPress } = props;
   return (
-    <View style={[styles.circleButton, style]}>
+    // ViewにonPressプロパティ？が無いので、TouchableOpacityを使う
+    <TouchableOpacity style={[styles.circleButton, style]} onPress={onPress}>
       {/* <Text style={styles.circleButtonLabel}>{ic}</Text> */}
       <MaterialCommunityIcons name={name} size={32} color="white" />
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -20,10 +21,12 @@ CircleB.propTypes = {
   // 何も指定指定していない場合はどんな形のオブジェクトでも受け入れる。
   style: shape(),
   name: string.isRequired,
+  onPress: func,
 };
 
 CircleB.defaultProps = {
   style: null,
+  onPress: null,
 };
 
 const styles = StyleSheet.create({

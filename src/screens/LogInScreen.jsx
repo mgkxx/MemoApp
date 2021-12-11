@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 
 import AppBar from '../components/AppBar';
 import Btn from '../components/Button';
@@ -18,7 +24,9 @@ export default function LogIngScreen() {
         {/* 会員登録を促すメッセージ  flexboxを適用しやすいようにViewで囲む */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not registered?</Text>
-          <Text style={styles.footerLlingk}>Sign up here!</Text>
+          <TouchableOpacity>
+            <Text style={styles.footerLlingk}>Sign up here!</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

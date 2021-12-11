@@ -11,13 +11,13 @@ export default function MemoListDetailSc() {
       <AppBar />
       {/* タイトルバー */}
       <View style={styles.memoHeader}>
-        <Text>買い物リスト</Text>
-        <Text>2020年12月24日 10:00</Text>
+        <Text style={styles.memoTitle}>買い物リスト</Text>
+        <Text style={styles.memoData}>2020年12月24日 10:00</Text>
       </View>
 
       {/* 本文 */}
-      <ScrollView>
-        <Text>
+      <ScrollView style={styles.memoBody}>
+        <Text style={styles.memoText}>
           買い物リスト
           {'\n'}
           書体やレイアウトなどを確認するために用います。
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   memoHeader: {
-    backgroundColor: 'red',
+    backgroundColor: '#64E8E0',
     height: 96,
     justifyContent: 'center',
     paddingVertical: 24,

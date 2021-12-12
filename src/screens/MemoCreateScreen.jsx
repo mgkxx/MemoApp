@@ -6,20 +6,25 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import AppBar from '../components/AppBar';
 import CircleButton from '../components/CircleButton';
 
 // メモ編集画面
-export default function MemoCreateScreen() {
+export default function MemoCreateScreen(props) {
+  const { navigation } = props;
+
   return (
     <KeyboardAvoidingView style={Styles.container} behavior="height">
       <View style={Styles.container}>
-        <AppBar />
         {/* メモ編集エリア */}
         <View style={Styles.inputContainer}>
           <TextInput value="" multiline style={Styles.input} />
         </View>
-        <CircleButton name="check-decagram" />
+        <CircleButton
+          name="check-decagram"
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
       </View>
     </KeyboardAvoidingView>
   );

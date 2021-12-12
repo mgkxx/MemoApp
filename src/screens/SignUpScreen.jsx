@@ -7,24 +7,40 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import AppBar from '../components/AppBar';
 import Btn from '../components/Button';
 
-export default function SignUpScreen() {
+export default function SignUpScreen(props) {
+  const { navigation } = props;
+
   return (
     <View style={styles.container}>
-      <AppBar />
       {/* Paddingなどを設定しやすいようにViewを設定 */}
       <View style={styles.inner}>
         <Text style={styles.title}>Sign Up</Text>
         <TextInput style={styles.input} value="Email Address" />
         <TextInput style={styles.input} value="PassWord" />
         {/* ボタン */}
-        <Btn label="submit" />
+        <Btn
+          label="submit"
+          onPress={() => {
+            // login画面と同様にresetでstackを上書き
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'MemoList' }],
+            });
+          }}
+        />
         {/* 会員登録を促すメッセージ  flexboxを適用しやすいようにViewで囲む */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registered?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'LogIn' }],
+              });
+            }}
+          >
             <Text style={styles.footerLlingk}>Log In.</Text>
           </TouchableOpacity>
         </View>

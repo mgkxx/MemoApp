@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 
-import AppBar from '../components/AppBar';
 import CircleButton from '../components/CircleButton';
 
-export default function MemoListDetailSc() {
+export default function MemoListDetailSc(props) {
+  const { navigation } = props;
+
   return (
     <View style={styles.container}>
-      {/* ヘッダー */}
-      <AppBar />
       {/* タイトルバー */}
       <View style={styles.memoHeader}>
         <Text style={styles.memoTitle}>買い物リスト</Text>
@@ -26,11 +25,13 @@ export default function MemoListDetailSc() {
       </ScrollView>
 
       {/* 編集ボタン */}
-      {/* <CircleButton>👈</CircleButton> */}
       {/* styleを上書き */}
       <CircleButton
-        style={{ top: 160, bottom: 'auto' }}
+        style={{ top: 60, bottom: 'auto' }}
         name="fountain-pen-tip"
+        onPress={() => {
+          navigation.navigate('MemoEdit');
+        }}
       />
     </View>
   );

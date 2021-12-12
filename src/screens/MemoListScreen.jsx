@@ -1,22 +1,24 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import AppBar from '../components/AppBar';
 import MemoList from '../components/MemoList';
 import Cl from '../components/CircleButton';
 
-export default function MemoListSc() {
+export default function MemoListSc(props) {
+  const { navigation } = props;
   return (
     <View style={styles.container}>
-      {/* AppBarファイルのdefault functionが返却される */}
-      <AppBar />
-
       {/* MemoListファイルのdefault functionが返却される */}
       <MemoList />
 
       {/* CircleButtonファイルのdefault functionが返却される */}
       {/* <Cl>+</Cl>の中の"+"は、propsのchildrenで取得できる */}
-      <Cl name="shape-circle-plus" />
+      <Cl
+        name="shape-circle-plus"
+        onPress={() => {
+          navigation.navigate('MemoCreate');
+        }}
+      />
     </View>
   );
 }

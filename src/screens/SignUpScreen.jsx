@@ -1,4 +1,5 @@
-import React from 'react';
+// ユーザーの入力情報を保持するためにhooksを使う
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -11,14 +12,38 @@ import Btn from '../components/Button';
 
 export default function SignUpScreen(props) {
   const { navigation } = props;
+  const [email, setEmail] = useState(''); // 配列の中から取得している分割代入
+  const [password, setPassword] = useState('');
 
   return (
     <View style={styles.container}>
       {/* Paddingなどを設定しやすいようにViewを設定 */}
       <View style={styles.inner}>
         <Text style={styles.title}>Sign Up</Text>
-        <TextInput style={styles.input} value="Email Address" />
-        <TextInput style={styles.input} value="PassWord" />
+        <TextInput
+          style={styles.input}
+          value={email}
+          // テキストが入力されるたびにcallback関数を実行(引数のtextはユーザーが入力した値)
+          onChangeText={(text) => {
+            setEmail(text);
+          }}
+          autoCapitalize="none" // 一文字めが大文字になる設定を無しにする
+          keyboardType="email-address"
+          placeholder="email-address"
+          textContentType="emailAddress"
+        />
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={(text) => {
+            setPassword(text);
+          }}
+          autoCapitalize="none"
+          placeholder="email-address"
+          secureTextEntry // 入力文字が見えない設定
+          // 実態はsecureTextEntry={true}(Reactのルールとして、trueの値は明記しなくもtrueと見なされる)
+          textContentType="password"
+        />
         {/* ボタン */}
         <Btn
           label="submit"

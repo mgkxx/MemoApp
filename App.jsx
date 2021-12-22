@@ -4,6 +4,7 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from '@react-navigation/stack';
+import firebase from 'firebase';
 
 import MemoListScreen from './src/screens/MemoListScreen';
 import MemoDetailScreen from './src/screens/MemoDetailScreen';
@@ -12,13 +13,22 @@ import MemoCreateScreen from './src/screens/MemoCreateScreen';
 import LogInScreen from './src/screens/LogInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 
+// env.js読み込み
+import { firebaseConfig } from './env';
+
 const stack = createStackNavigator();
+
+// firebase.apps.lengthで、すでに初期化されているアプリの数を取得する事ができる
+if (firebase.apps.length === 0) {
+  // firebase初期化
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default function App() {
   return (
     <NavigationContainer>
       <stack.Navigator
-        initialRouteName="LogIn"
+        initialRouteName="SignUp"
         screenOptions={{
           headerStyle: { backgroundColor: '#64E8E0' }, // ヘッダーの色
           headerTitleStyle: { color: '#ffffff' }, // タイトルのフォント色

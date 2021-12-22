@@ -6,7 +6,9 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import firebase from 'firebase';
 
 import Btn from '../components/Button';
 
@@ -15,6 +17,26 @@ export default function SignUpScreen(props) {
   const [email, setEmail] = useState(''); // 配列の中から取得している分割代入
   const [password, setPassword] = useState('');
 
+  function handlePress() {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      // 会員登録が成功したらthenの中のコールバック関数が実行される(thenはuserの情報が受け取れる)
+      .then((userCredential) => {
+        const { user } = userCredential; // コールバック関数で受け取ったuserCredentialの中からuserを取り出す
+        console.log(user.uid);
+        // login画面と同様にresetでstackを上書き
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MemoList' }],
+        });
+      })
+      // catchはエラーを引数で受け取ることができる
+      .catch((error) => {
+        console.log(error.code, error.message);
+        Alert.alert(error.code);
+      });
+  }
   return (
     <View style={styles.container}>
       {/* Paddingなどを設定しやすいようにViewを設定 */}
@@ -35,6 +57,7 @@ export default function SignUpScreen(props) {
         <TextInput
           style={styles.input}
           value={password}
+          // アローファンクション：イベントが発生したときにそれをトリガーとして実行する関数
           onChangeText={(text) => {
             setPassword(text);
           }}
@@ -45,16 +68,7 @@ export default function SignUpScreen(props) {
           textContentType="password"
         />
         {/* ボタン */}
-        <Btn
-          label="submit"
-          onPress={() => {
-            // login画面と同様にresetでstackを上書き
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'MemoList' }],
-            });
-          }}
-        />
+        <Btn label="submit" onPress={handlePress} />
         {/* 会員登録を促すメッセージ  flexboxを適用しやすいようにViewで囲む */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registered?</Text>

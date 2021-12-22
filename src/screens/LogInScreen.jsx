@@ -6,7 +6,9 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import firebase from 'firebase';
 
 import Btn from '../components/Button';
 
@@ -15,6 +17,25 @@ export default function LogIngScreen(props) {
   // "email"は保持しておきたい値、"setEmail"は保持しておきたい値を更新する為のfunctionが返却されている
   const [email, setEmail] = useState(''); // 配列の中から取得している分割代入
   const [password, setPassword] = useState('');
+
+  function handlePress() {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        // resetメソッドはroutesの内容でstackを上書く。(それ以前のstackは削除される)
+        navigation.reset({
+          index: 0, // routesの配列の中から、表示するインデックスを指定
+          routes: [{ name: 'MemoList' }],
+        });
+      })
+      .catch((error) => {
+        console.log(error.code, error.message);
+        Alert.alert(error.code);
+      });
+  }
 
   return (
     <View style={styles.container}>
@@ -51,13 +72,7 @@ export default function LogIngScreen(props) {
         <Btn
           label="submit"
           // 左上の戻るボタンを削除するためにnavigationのstackを削除
-          onPress={() => {
-            // resetメソッドはroutesの内容でstackを上書く。(それ以前のstackは削除される)
-            navigation.reset({
-              index: 0, // routesの配列の中から、表示するインデックスを指定
-              routes: [{ name: 'MemoList' }],
-            });
-          }}
+          onPress={handlePress}
         />
         {/* 会員登録を促すメッセージ  flexboxを適用しやすいようにViewで囲む */}
         <View style={styles.footer}>

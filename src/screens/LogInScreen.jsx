@@ -1,5 +1,5 @@
 // ユーザーの入力情報を保持するためにhooksを使う
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,37 @@ export default function LogIngScreen(props) {
   // "email"は保持しておきたい値、"setEmail"は保持しておきたい値を更新する為のfunctionが返却されている
   const [email, setEmail] = useState(''); // 配列の中から取得している分割代入
   const [password, setPassword] = useState('');
+
+  // useEffect(() => {
+  //   console.log('useEffectStart');
+  //   // return console.log('unmount'); //こっちでもエラーは出なかったが、アンマウント時ではなく、マウント時にコンソールに表示されているっぽい
+  //   return () => {
+  //     console.log('unmount');
+  //   };
+  // });
+
+  // useEffect:rendering時(起動時[マウント時のみ])に実行される関数(画面を表示した瞬間に実行される)
+  useEffect(() => {
+    // ログイン状態を監視するメソッド
+    // ログイン状態を監視するfunction:onAuthStateChanged unsubscribeには関数が返却される
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      // 引数にuserを受け取れる
+      // userが存在していれば(返却されたら)、ログインしていれば、画面遷移する
+      if (user) {
+        navigation.reset({
+          index: 0, // routesの配列の中から、表示するインデックスを指定
+          routes: [{ name: 'MemoList' }],
+        });
+      }
+    });
+    // useEffectの機能で、returnはアンマウントされる直前に実行される
+    return unsubscribe; // firebase(onAuthStateChanged)の機能。戻り値の関数を実行すると監視を解除する
+  }, []); // 第二引数に[](空の配列)を指定すると、初回のレンダリング時のみ、一度だけuseEffectが実行されるようになる
+
+  // useEffectの第二引数
+  // useEffect(callback); // propsが変更されるなどで、画面がレンダリングするたびにcallbackgが実行される
+  // useEffect(callback, []); // コンポーネントがマウントされたときに、一度だけcallbackが実行される
+  // useEffect(callback, [foo]); // fooが更新されたらcallbackが実行される
 
   function handlePress() {
     firebase

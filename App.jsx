@@ -16,6 +16,8 @@ import SignUpScreen from './src/screens/SignUpScreen';
 // env.js読み込み
 import { firebaseConfig } from './env';
 
+require('firebase/firestore');
+
 const stack = createStackNavigator();
 
 // firebase.apps.lengthで、すでに初期化されているアプリの数を取得する事ができる

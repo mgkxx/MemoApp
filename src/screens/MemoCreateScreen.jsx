@@ -18,7 +18,9 @@ export default function MemoCreateScreen(props) {
     // 現在ログインしているユーザーを取得
     const { currentUser } = firebase.auth();
     const db = firebase.firestore();
+    // collectionを作成
     const ref = db.collection(`users/${currentUser.uid}/memos`);
+    // ドキュメントを作成
     ref
       .add({
         // keyとvalueの名前が同じ時は省略(bodyText: 'bodyText')

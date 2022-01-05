@@ -66,3 +66,6 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+// logIn,SighIn => MemoListScr & MemoListComp => MemoDetail => MemoEdit
+//                                            => MemoCreate

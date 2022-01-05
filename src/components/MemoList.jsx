@@ -10,30 +10,32 @@ import { shape, string, instanceOf, arrayOf } from 'prop-types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
+import { dateToString } from '../utils';
+
 export default function MemoLst(props) {
   const { memos } = props;
   // {/* MemoListComponentはnavigationというプロパティを受け取ることができない */}
   //  useNavigationはhookなので、使用するコンポーネント直下で変数セットを行わないとエラーになるっぽい。
-  const navigation = useNavigation(); // MemoLst(){}の外側に配置するとエラー
+  const navigation = useNavigation();
 
+  // FlatListのrenderItem docを参照
   function renderItem({ item }) {
     return (
-      // {/* NavigationContainer内に明記されている「Stack."Screen"」のComponentしか受け取れない */}
       <TouchableOpacity
-        // リストを表示させるときは、keyを設定する必要がある(Reactのルール)
         style={styles.memoListItem}
         onPress={() => {
-          navigation.navigate('MemoDetail');
+          // 「, { id: item.id }」 idを渡している
+          navigation.navigate('MemoDetail', { id: item.id });
         }}
       >
         <View>
-          {/* numberOfLines はTextの中身の1行のみ表示させる */}
+          {/* numberOfLines はTextの中身を1行のみ表示させる */}
           <Text style={styles.memoListItemTitle} numberOfLines={1}>
             {item.bodyText}
           </Text>
           <Text style={styles.memoListItemDate}>
             {/* date型だとエラーになるのでString変換 */}
-            {String(item.updatedAt)}
+            {dateToString(item.updatedAt)}
           </Text>
         </View>
         <TouchableOpacity style={styles.memoDelete}>
@@ -47,13 +49,14 @@ export default function MemoLst(props) {
     );
   }
 
+  // レンダリング
   return (
     <View styleJ={styles.container}>
       {/* FlatListhは画面に表示される分、data配列分レンダリングする */}
       <FlatList
         data={memos}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        renderItem={renderItem} // renderItemを呼び出すとき、{item}を渡してないけど、FlatListのdataが入る？
+        keyExtractor={(item) => item.id} // リストを表示させるときは、keyを設定する必要がある(Reactのルール)
       />
     </View>
   );
@@ -61,6 +64,7 @@ export default function MemoLst(props) {
 
 MemoLst.propTypes = {
   // arrayOfは配列の型
+  // オブジェクトを内包した配列
   memos: arrayOf(
     shape({
       id: string,

@@ -16,6 +16,7 @@ export default function MemoListSc(props) {
       headerRight: () => <LogOutButton />,
     });
   }, []);
+  // レンダリング後、firestoreからログインユーザーのメモの情報を取得して、memosにセット
   // MemoListScreenの表示にnavigationを操作しようとしているので警告が出る Cannot update a component..
   useEffect(() => {
     const { currentUser } = firebase.auth();
@@ -26,6 +27,7 @@ export default function MemoListSc(props) {
       const ref = db
         .collection(`users/${currentUser.uid}/memos`)
         .orderBy('updatedAt', 'desc');
+      // onSnapshot:referenceDB情報を監視(取得)する
       unsubscribe = ref.onSnapshot(
         (snapshot) => {
           const userMemos = [];
@@ -49,16 +51,14 @@ export default function MemoListSc(props) {
         } // Missing trailing commaが何故か出る(eslintのエラー)
       );
     }
-    return unsubscribe;
+    // useEffectのアロー関数内？の「return**」は、レンダリング？がアンマウント時に実行される関数
+    return unsubscribe; // onSnapshotの戻り値の関数を実行で、監視終了
   }, []);
 
   return (
     <View style={styles.container}>
       {/* MemoListファイルのdefault functionが返却される */}
       <MemoList memos={memos} />
-
-      {/* CircleButtonファイルのdefault functionが返却される */}
-      {/* <Cl>+</Cl>の中の"+"は、propsのchildrenで取得できる */}
       <Cl
         name="shape-circle-plus"
         onPress={() => {

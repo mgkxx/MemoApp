@@ -20,6 +20,7 @@ export default function MemoLst(props) {
 
   // FlatListのrenderItem docを参照
   function renderItem({ item }) {
+    // function renderItem( item ) {
     return (
       <TouchableOpacity
         style={styles.memoListItem}

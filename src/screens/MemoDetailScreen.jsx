@@ -23,7 +23,7 @@ export default function MemoListDetailSc(props) {
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
       // データを取得 docまでのrefを取得しているので、単一のデータを取得(docに返却) callback
       unsubscribe = ref.onSnapshot((doc) => {
-        console.log(doc.id, doc.data());
+        //console.log(doc.id, doc.data());
         const data = doc.data();
         setMemo({
           id: doc.id,
@@ -59,7 +59,10 @@ export default function MemoListDetailSc(props) {
         // アローファンクションを使用する理由...
         // アローファンクションを削除すると警告 Cannot update a component from...
         onPress={() => {
-          navigation.navigate('MemoEdit');
+          navigation.navigate('MemoEdit', {
+            id: memo.id,
+            bodyText: memo.bodyText,
+          });
         }}
       />
     </View>

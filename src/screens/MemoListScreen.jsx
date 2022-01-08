@@ -20,8 +20,10 @@ export default function MemoListSc(props) {
   // MemoListScreenの表示にnavigationを操作しようとしているので警告が出る Cannot update a component..
   useEffect(() => {
     const { currentUser } = firebase.auth();
+    // const hatena = firebase.auth(); // mailAddresなども確認できた
+    // console.log(hatena);
     const db = firebase.firestore();
-    let unsubscribe = () => {}; // 空のアローファンクション(何も実行しない)
+    let unsubscribe = () => {}; // 空の関数(何も実行しない)
     // ログインユーザー情報が取得できたら
     if (currentUser) {
       const ref = db
@@ -33,7 +35,7 @@ export default function MemoListSc(props) {
           const userMemos = [];
           // snapShotにはmemosのリストが返却される
           snapshot.forEach((doc) => {
-            console.log(doc.id, doc.data());
+            // console.log(doc.id, doc.data());
             const data = doc.data();
             userMemos.push({
               id: doc.id,
@@ -57,7 +59,8 @@ export default function MemoListSc(props) {
 
   return (
     <View style={styles.container}>
-      {/* MemoListファイルのdefault functionが返却される */}
+      {/* MemoListが呼ばれる時には既にuseEffectが実行されている(useEffectはレンダリング後(マウウント時)に実行されるようだが、
+      下階層のレンダリングより前に実行される様子) */}
       <MemoList memos={memos} />
       <Cl
         name="shape-circle-plus"

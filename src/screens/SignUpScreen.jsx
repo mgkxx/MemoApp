@@ -62,7 +62,7 @@ export default function SignUpScreen(props) {
             setPassword(text);
           }}
           autoCapitalize="none"
-          placeholder="email-address"
+          placeholder="password"
           secureTextEntry // 入力文字が見えない設定
           // 実態はsecureTextEntry={true}(Reactのルールとして、trueの値は明記しなくもtrueと見なされる)
           textContentType="password"

@@ -1,34 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
+import { shape, string } from 'prop-types';
+import firebase from 'firebase';
 
 import CircleButton from '../components/CircleButton';
 
 // メモ編集画面
 export default function MemoEditScreen(props) {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const { id, bodyText } = route.params;
+
+  const [body, setBody] = useState(bodyText);
+
+  function handlePress() {
+    const { currentUser } = firebase.auth();
+    if (currentUser) {
+      const db = firebase.firestore();
+      const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
+      ref
+        .set({
+          bodyText: body,
+          updatedAt: new Date(),
+        })
+        .then(() => {
+          navigation.goBack();
+        })
+        .catch((error) => {
+          Alert.alert(error.code);
+        });
+    }
+  }
 
   return (
     <KeyboardAvoidingView style={Styles.container} behavior="height">
       <View style={Styles.container}>
         {/* メモ編集エリア */}
         <View style={Styles.inputContainer}>
-          <TextInput value="買い物" multiline style={Styles.input} />
+          <TextInput
+            value={body}
+            multiline
+            style={Styles.input}
+            onChangeText={(text) => {
+              setBody(text);
+            }}
+          />
         </View>
-        <CircleButton
-          name="check-decagram"
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
+        <CircleButton name="check-decagram" onPress={handlePress} />
       </View>
     </KeyboardAvoidingView>
   );
 }
+
+MemoEditScreen.propTypes = {
+  route: shape({
+    params: shape({ id: string, bodyText: string }),
+  }).isRequired,
+};
 
 const Styles = StyleSheet.create({
   container: {

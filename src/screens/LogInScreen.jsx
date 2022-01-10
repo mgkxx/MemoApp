@@ -11,12 +11,14 @@ import {
 import firebase from 'firebase';
 
 import Btn from '../components/Button';
+import Loading from '../components/Loading';
 
 export default function LogIngScreen(props) {
   const { navigation } = props;
   // "email"は保持しておきたい値、"setEmail"は保持しておきたい値を更新する為のfunctionが返却されている
   const [email, setEmail] = useState(''); // 配列の中から取得している分割代入
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // 初期値true
 
   // useEffect(() => {
   //   console.log('useEffectStart');
@@ -38,6 +40,9 @@ export default function LogIngScreen(props) {
           index: 0, // routesの配列の中から、表示するインデックスを指定
           routes: [{ name: 'MemoList' }],
         });
+        // setIsLoading(false)はLoginScrennが破棄されるので不要
+      } else {
+        setIsLoading(false);
       }
     });
     // useEffectの機能で、returnはアンマウントされる直前に実行される
@@ -65,11 +70,16 @@ export default function LogIngScreen(props) {
       .catch((error) => {
         console.log(error.code, error.message);
         Alert.alert(error.code);
+      })
+      // .catchの後にthenを繋げると、成功・失敗のどちらでも実行される処理
+      .then(() => {
+        setIsLoading(false);
       });
   }
 
   return (
     <View style={styles.container}>
+      <Loading isLoading={isLoading} />
       {/* Paddingなどを設定しやすいようにViewを設定 */}
       <View style={styles.inner}>
         {/* タイトル */}

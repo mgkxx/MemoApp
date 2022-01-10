@@ -18,7 +18,7 @@ export default function MemoLst(props) {
   //  useNavigationはhookなので、使用するコンポーネント直下で変数セットを行わないとエラーになるっぽい。
   const navigation = useNavigation();
 
-  // FlatListのrenderItem docを参照
+  // FlatListのrenderItem 引数のitemはオブジェクト("{}"で囲む必要あり)
   function renderItem({ item }) {
     // function renderItem( item ) {
     return (
@@ -52,7 +52,7 @@ export default function MemoLst(props) {
 
   // レンダリング
   return (
-    <View styleJ={styles.container}>
+    <View style={styles.container}>
       {/* FlatListhは画面に表示される分、data配列分レンダリングする */}
       <FlatList
         data={memos}

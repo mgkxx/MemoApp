@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, Text } from 'react-native';
 import firebase from 'firebase';
 
 import MemoList from '../components/MemoList';
 import Cl from '../components/CircleButton';
 import LogOutButton from '../components/LogOutButton';
+import Button from '../components/Button';
+import Loading from '../components/Loading';
 
 export default function MemoListSc(props) {
   const { navigation } = props;
   const [memos, setmemos] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   // navigationの警告をuseEffectで解消
   useEffect(() => {
     navigation.setOptions({
@@ -26,6 +30,8 @@ export default function MemoListSc(props) {
     let unsubscribe = () => {}; // 空の関数(何も実行しない)
     // ログインユーザー情報が取得できたら
     if (currentUser) {
+      setIsLoading;
+      setIsLoading(true);
       const ref = db
         .collection(`users/${currentUser.uid}/memos`)
         .orderBy('updatedAt', 'desc');
@@ -45,9 +51,11 @@ export default function MemoListSc(props) {
           });
           // snapShotが完了したタイミングで、setmemosに格納
           setmemos(userMemos);
+          setIsLoading(false);
         },
         (error) => {
           console.log(error);
+          setIsLoading(false);
           Alert.alert('データの読み込みに失敗しました。');
           // eslint-disable-next-line
         } // Missing trailing commaが何故か出る(eslintのエラー)
@@ -56,6 +64,25 @@ export default function MemoListSc(props) {
     // useEffectのアロー関数内？の「return**」は、レンダリング？がアンマウント時に実行される関数
     return unsubscribe; // onSnapshotの戻り値の関数を実行で、監視終了
   }, []);
+
+  // lenght:配列の要素数を取得
+  if (memos.length === 0) {
+    return (
+      <View style={emptyStyles.container}>
+        <Loading isLoading={isLoading} />
+        <View style={emptyStyles.inner}>
+          <Text style={emptyStyles.title}>メモを作成しよう!</Text>
+          <Button
+            style={emptyStyles.button}
+            label="作成する"
+            onPress={() => {
+              navigation.navigate('MemoCreate');
+            }}
+          />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -77,5 +104,24 @@ const styles = StyleSheet.create({
     // Webは横に並ぶが、ReactNativeは縦に並ぶ
     flex: 1,
     backgroundColor: '#F0F4F8',
+  },
+});
+
+const emptyStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center', // 両脇に同じサイズの枠が入る位置
+  },
+  inner: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 18,
+    marginBottom: 24,
+  },
+  button: {
+    alignSelf: 'center',
   },
 });

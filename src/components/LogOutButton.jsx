@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line
 import { TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 import firebase from 'firebase';
 import { useNavigation } from '@react-navigation/native';

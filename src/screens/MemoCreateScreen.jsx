@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import firebase from 'firebase';
 
@@ -29,12 +30,11 @@ export default function MemoCreateScreen(props) {
         updatedAt: new Date(),
       })
       // 作成したdocumentの参照を受け取ることができる
-      .then((docRef) => {
-        console.log('created', docRef.id);
+      .then(() => {
         navigation.goBack();
       })
       .catch((error) => {
-        console.log('error', error);
+        Alert.Alert('error', error);
       });
   }
 

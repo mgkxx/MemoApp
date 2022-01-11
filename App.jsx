@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -19,6 +20,7 @@ import { firebaseConfig } from './env';
 require('firebase/firestore');
 
 const stack = createStackNavigator();
+LogBox.ignoreLogs(['setting a timer']); // 無視する警告
 
 // firebase.apps.lengthで、すでに初期化されているアプリの数を取得する事ができる
 if (firebase.apps.length === 0) {

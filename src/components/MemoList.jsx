@@ -7,6 +7,7 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
+// eslint-disable-next-line
 import { shape, string, instanceOf, arrayOf } from 'prop-types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -54,7 +55,7 @@ export default function MemoLst(props) {
           navigation.navigate('MemoDetail', { id: item.id });
         }}
       >
-        <View>
+        <View style={styles.memoInner}>
           {/* numberOfLines はTextの中身を1行のみ表示させる */}
           <Text style={styles.memoListItemTitle} numberOfLines={1}>
             {item.bodyText}
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'rgba(0,0,0,0.15)',
   },
+  memoInner: { flex: 1 },
   memoListItemTitle: {
     fontSize: 16,
     lineHeight: 32,

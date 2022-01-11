@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line
 import { View, StyleSheet, Alert, Text } from 'react-native';
 import firebase from 'firebase';
 
@@ -52,8 +53,7 @@ export default function MemoListSc(props) {
           setmemos(userMemos);
           setIsLoading(false);
         },
-        (error) => {
-          console.log(error);
+        () => {
           setIsLoading(false);
           Alert.alert('データの読み込みに失敗しました。');
           // eslint-disable-next-line

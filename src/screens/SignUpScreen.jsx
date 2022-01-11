@@ -23,9 +23,8 @@ export default function SignUpScreen(props) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       // 会員登録が成功したらthenの中のコールバック関数が実行される(thenはuserの情報が受け取れる)
-      .then((userCredential) => {
-        const { user } = userCredential; // コールバック関数で受け取ったuserCredentialの中からuserを取り出す
-        console.log(user.uid);
+      .then(() => {
+        // const { user } = userCredential; // コールバック関数で受け取ったuserCredentialの中からuserを取り出す
         // login画面と同様にresetでstackを上書き
         navigation.reset({
           index: 0,

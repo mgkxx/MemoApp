@@ -59,9 +59,8 @@ export default function LogIngScreen(props) {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const { user } = userCredential;
-        console.log(user.uid);
+      .then(() => {
+        // const { user } = userCredential;
         // resetメソッドはroutesの内容でstackを上書く。(それ以前のstackは削除される)
         navigation.reset({
           index: 0, // routesの配列の中から、表示するインデックスを指定

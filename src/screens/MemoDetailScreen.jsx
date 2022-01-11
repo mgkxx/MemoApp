@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import firebase from 'firebase';
 import { shape, string } from 'prop-types';
@@ -23,7 +24,6 @@ export default function MemoListDetailSc(props) {
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
       // データを取得 docまでのrefを取得しているので、単一のデータを取得(docに返却) callback
       unsubscribe = ref.onSnapshot((doc) => {
-        //console.log(doc.id, doc.data());
         const data = doc.data();
         setMemo({
           id: doc.id,
@@ -47,8 +47,10 @@ export default function MemoListDetailSc(props) {
       </View>
 
       {/* 本文 */}
-      <ScrollView style={styles.memoBody}>
-        <Text style={styles.memoText}>{memo && memo.bodyText}</Text>
+      <ScrollView>
+        <View style={styles.memoBodyInner}>
+          <Text style={styles.memoText}>{memo && memo.bodyText}</Text>
+        </View>
       </ScrollView>
 
       {/* 編集ボタン */}
@@ -109,8 +111,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
   },
-  memoBody: {
-    paddingVertical: 32,
+  memoBodyInner: {
+    paddingTop: 32,
+    paddingBottom: 80,
     paddingHorizontal: 27,
   },
   memoText: {

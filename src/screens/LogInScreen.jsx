@@ -12,6 +12,7 @@ import firebase from 'firebase';
 
 import Btn from '../components/Button';
 import Loading from '../components/Loading';
+import { translateErrors } from '../utils';
 
 export default function LogIngScreen(props) {
   const { navigation } = props;
@@ -68,8 +69,8 @@ export default function LogIngScreen(props) {
         });
       })
       .catch((error) => {
-        console.log(error.code, error.message);
-        Alert.alert(error.code);
+        const errorMsg = translateErrors(error.code);
+        Alert.alert(errorMsg.title, errorMsg.description);
       })
       // .catchの後にthenを繋げると、成功・失敗のどちらでも実行される処理
       .then(() => {

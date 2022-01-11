@@ -30,7 +30,6 @@ export default function MemoListSc(props) {
     let unsubscribe = () => {}; // 空の関数(何も実行しない)
     // ログインユーザー情報が取得できたら
     if (currentUser) {
-      setIsLoading;
       setIsLoading(true);
       const ref = db
         .collection(`users/${currentUser.uid}/memos`)

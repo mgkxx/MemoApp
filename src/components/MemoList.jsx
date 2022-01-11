@@ -5,10 +5,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from 'react-native';
 import { shape, string, instanceOf, arrayOf } from 'prop-types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import firebase from 'firebase';
 
 import { dateToString } from '../utils';
 
@@ -17,6 +19,29 @@ export default function MemoLst(props) {
   // {/* MemoListComponentはnavigationというプロパティを受け取ることができない */}
   //  useNavigationはhookなので、使用するコンポーネント直下で変数セットを行わないとエラーになるっぽい。
   const navigation = useNavigation();
+
+  function deleteMemo(id) {
+    const { currentUser } = firebase.auth();
+    if (currentUser) {
+      const db = firebase.firestore();
+      const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
+      Alert.alert('メモを削除します', 'よろしいですか？', [
+        {
+          text: 'キャンセル',
+          onPress: () => {},
+        },
+        {
+          text: '削除する',
+          style: 'destructive', // iphone限定で、文字を赤く
+          onPress: () => {
+            ref.delete().catch(() => {
+              Alert.alert('削除に失敗しました');
+            });
+          },
+        },
+      ]);
+    }
+  }
 
   // FlatListのrenderItem 引数のitemはオブジェクト("{}"で囲む必要あり)
   function renderItem({ item }) {
@@ -39,7 +64,12 @@ export default function MemoLst(props) {
             {dateToString(item.updatedAt)}
           </Text>
         </View>
-        <TouchableOpacity style={styles.memoDelete}>
+        <TouchableOpacity
+          style={styles.memoDelete}
+          onPress={() => {
+            deleteMemo(item.id);
+          }}
+        >
           <MaterialCommunityIcons
             name="close-box-multiple-outline"
             size={16}
